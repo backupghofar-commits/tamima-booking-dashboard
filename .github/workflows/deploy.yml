@@ -1,0 +1,66 @@
+name: 🚀 Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: 🏗️ Build PWA
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🏗️ Build production
+        run: npm run build
+
+      - name: 📋 Copy PWA assets to dist
+        run: |
+          # Pastikan manifest.json, sw.js, dan icons ada di dist
+          cp -n public/manifest.json dist/ || true
+          cp -n public/sw.js dist/ || true
+          cp -n public/pwa-icon-512.png dist/ || true
+          cp -n public/stamp-tamima.png dist/ || true
+          
+          # Buat 404.html untuk SPA routing
+          cp dist/index.html dist/404.html
+          
+          # Show output
+          ls -la dist/
+
+      - name: 📤 Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🌐 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
