@@ -1,0 +1,917 @@
+@import "tailwindcss";
+
+/* ════════════════════════════════════════════════════════════════
+   🎯 RESPONSIVE BREAKPOINTS — TAMIMA DESIGN SYSTEM
+   ════════════════════════════════════════════════════════════════
+   Device              │ Width
+   ────────────────────┼─────────────────
+   Mobile XS           │ 320 - 479px
+   Mobile              │ 480 - 767px
+   Tablet Portrait     │ 768 - 991px
+   Tablet Landscape    │ 992 - 1199px
+   Laptop              │ 1200 - 1439px
+   Desktop             │ 1440 - 1919px
+   Full HD             │ 1920 - 2559px
+   2K Monitor          │ 2560 - 3839px
+   4K Monitor          │ ≥ 3840px
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* CSS Variables — 10 Breakpoints System */
+  --bp-320:  320px;   /* Mobile XS (iPhone SE 1st gen) */
+  --bp-375:  375px;   /* Mobile Small (iPhone SE 2/3, iPhone 6-13 mini) */
+  --bp-480:  480px;   /* Mobile (Galaxy S, iPhone 12-15 Pro Max) */
+  --bp-768:  768px;   /* Tablet Portrait (iPad) */
+  --bp-992:  992px;   /* Tablet Landscape (iPad landscape) */
+  --bp-1200: 1200px;  /* Laptop (1366 screens) */
+  --bp-1440: 1440px;  /* Desktop (MacBook Pro, common monitors) */
+  --bp-1920: 1920px;  /* Full HD */
+  --bp-2560: 2560px;  /* 2K / QHD */
+  --bp-3840: 3840px;  /* 4K / UHD */
+  
+  /* Aliases for backward compatibility */
+  --mobile-xs: 320px;
+  --mobile: 480px;
+  --tablet: 768px;
+  --tablet-landscape: 992px;
+  --laptop: 1200px;
+  --desktop: 1440px;
+  --fullhd: 1920px;
+  --monitor-2k: 2560px;
+  --monitor-4k: 3840px;
+
+  /* Container Max-Widths per breakpoint */
+  --container-mobile-xs: 100%;
+  --container-mobile: 100%;
+  --container-tablet: 750px;
+  --container-tablet-landscape: 970px;
+  --container-laptop: 1180px;
+  --container-desktop: 1380px;
+  --container-fullhd: 1820px;
+  --container-2k: 2400px;
+  --container-4k: 3600px;
+
+  /* Base Font Sizes — Fluid Scaling */
+  --font-base-mobile-xs: 12px;
+  --font-base-mobile: 13px;
+  --font-base-tablet: 14px;
+  --font-base-desktop: 15px;
+  --font-base-fullhd: 16px;
+  --font-base-2k: 18px;
+  --font-base-4k: 22px;
+
+  /* Spacing System */
+  --spacing-mobile: 8px;
+  --spacing-tablet: 12px;
+  --spacing-desktop: 16px;
+  --spacing-fullhd: 20px;
+  --spacing-2k: 24px;
+  --spacing-4k: 32px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   🔧 TAILWIND v4 CUSTOM BREAKPOINTS
+   Override default Tailwind breakpoints + tambah breakpoint baru
+   Usage: xs:, sm:, md:, lg:, xl:, 2xl:, 3xl:, 4xl:, 5xl:
+   ════════════════════════════════════════════════════════════════ */
+@theme {
+  /* 🎯 10-Tier Responsive Breakpoints (Tailwind v4 syntax) */
+  --breakpoint-xs:    320px;   /* 1. Mobile XS  — iPhone SE 1st gen */
+  --breakpoint-xs2:   375px;   /* 2. Mobile Small — iPhone SE 2/3, mini */
+  --breakpoint-sm:    480px;   /* 3. Mobile — Galaxy S, iPhone Pro Max */
+  --breakpoint-md:    768px;   /* 4. Tablet Portrait — iPad */
+  --breakpoint-lg:    992px;   /* 5. Tablet Landscape — iPad landscape */
+  --breakpoint-xl:    1200px;  /* 6. Laptop — 1366 screens */
+  --breakpoint-2xl:   1440px;  /* 7. Desktop — MacBook Pro */
+  --breakpoint-3xl:   1920px;  /* 8. Full HD */
+  --breakpoint-4xl:   2560px;  /* 9. 2K Monitor */
+  --breakpoint-5xl:   3840px;  /* 10. 4K Monitor */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+  /* Fluid base font sizing */
+  font-size: var(--font-base-mobile-xs);
+}
+
+/* Fluid font-size per breakpoint */
+@media (min-width: 480px) { html { font-size: var(--font-base-mobile); } }
+@media (min-width: 768px) { html { font-size: var(--font-base-tablet); } }
+@media (min-width: 1440px) { html { font-size: var(--font-base-desktop); } }
+@media (min-width: 1920px) { html { font-size: var(--font-base-fullhd); } }
+@media (min-width: 2560px) { html { font-size: var(--font-base-2k); } }
+@media (min-width: 3840px) { html { font-size: var(--font-base-4k); } }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   📦 RESPONSIVE CONTAINER UTILITIES
+   .container-responsive — auto adjust max-width per breakpoint
+   ════════════════════════════════════════════════════════════════ */
+.container-responsive {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-mobile);
+  padding-right: var(--spacing-mobile);
+}
+
+@media (min-width: 480px) {
+  .container-responsive {
+    max-width: var(--container-mobile);
+    padding-left: var(--spacing-mobile);
+    padding-right: var(--spacing-mobile);
+  }
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    max-width: var(--container-tablet);
+    padding-left: var(--spacing-tablet);
+    padding-right: var(--spacing-tablet);
+  }
+}
+
+@media (min-width: 992px) {
+  .container-responsive {
+    max-width: var(--container-tablet-landscape);
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-responsive {
+    max-width: var(--container-laptop);
+    padding-left: var(--spacing-desktop);
+    padding-right: var(--spacing-desktop);
+  }
+}
+
+@media (min-width: 1440px) {
+  .container-responsive {
+    max-width: var(--container-desktop);
+  }
+}
+
+@media (min-width: 1920px) {
+  .container-responsive {
+    max-width: var(--container-fullhd);
+    padding-left: var(--spacing-fullhd);
+    padding-right: var(--spacing-fullhd);
+  }
+}
+
+@media (min-width: 2560px) {
+  .container-responsive {
+    max-width: var(--container-2k);
+    padding-left: var(--spacing-2k);
+    padding-right: var(--spacing-2k);
+  }
+}
+
+@media (min-width: 3840px) {
+  .container-responsive {
+    max-width: var(--container-4k);
+    padding-left: var(--spacing-4k);
+    padding-right: var(--spacing-4k);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   🎨 RESPONSIVE TYPOGRAPHY SCALES
+   Auto-scale heading sizes per breakpoint
+   ════════════════════════════════════════════════════════════════ */
+.text-responsive-xs {
+  font-size: 0.6875rem; /* 11px base */
+}
+.text-responsive-sm {
+  font-size: 0.75rem; /* 12px base */
+}
+.text-responsive-base {
+  font-size: 0.875rem; /* 14px base */
+}
+.text-responsive-lg {
+  font-size: 1rem; /* 16px base */
+}
+.text-responsive-xl {
+  font-size: 1.125rem; /* 18px base */
+}
+.text-responsive-2xl {
+  font-size: 1.375rem; /* 22px base */
+}
+
+/* Scale up for larger screens */
+@media (min-width: 1440px) {
+  .text-responsive-xs { font-size: 0.75rem; }
+  .text-responsive-sm { font-size: 0.875rem; }
+  .text-responsive-base { font-size: 1rem; }
+  .text-responsive-lg { font-size: 1.125rem; }
+  .text-responsive-xl { font-size: 1.375rem; }
+  .text-responsive-2xl { font-size: 1.75rem; }
+}
+
+@media (min-width: 1920px) {
+  .text-responsive-xs { font-size: 0.875rem; }
+  .text-responsive-sm { font-size: 1rem; }
+  .text-responsive-base { font-size: 1.125rem; }
+  .text-responsive-lg { font-size: 1.375rem; }
+  .text-responsive-xl { font-size: 1.625rem; }
+  .text-responsive-2xl { font-size: 2rem; }
+}
+
+@media (min-width: 2560px) {
+  .text-responsive-xs { font-size: 1rem; }
+  .text-responsive-sm { font-size: 1.125rem; }
+  .text-responsive-base { font-size: 1.25rem; }
+  .text-responsive-lg { font-size: 1.5rem; }
+  .text-responsive-xl { font-size: 1.875rem; }
+  .text-responsive-2xl { font-size: 2.5rem; }
+}
+
+@media (min-width: 3840px) {
+  .text-responsive-xs { font-size: 1.25rem; }
+  .text-responsive-sm { font-size: 1.5rem; }
+  .text-responsive-base { font-size: 1.75rem; }
+  .text-responsive-lg { font-size: 2rem; }
+  .text-responsive-xl { font-size: 2.5rem; }
+  .text-responsive-2xl { font-size: 3.5rem; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   📊 TABLE WRAPPER — Horizontal scroll untuk tabel lebar
+   Mencegah text terpotong, tabel tetap utuh dengan scroll
+   Auto-show scroll hint pada laptop breakpoint
+   ════════════════════════════════════════════════════════════════ */
+.table-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll iOS */
+  scrollbar-width: thin;             /* Firefox: thinner scrollbar */
+  scrollbar-color: #94a3b8 #f1f5f9;   /* Firefox: slate-400 thumb on slate-100 track */
+  position: relative;
+  max-width: 100%;
+}
+
+/* Scroll edge gradient indicators (right edge hint) */
+.table-wrapper::before,
+.table-wrapper::after {
+  content: '';
+  position: sticky;
+  top: 0;
+  height: 100%;
+  width: 20px;
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .table-wrapper::after {
+    content: '↔';
+    display: inline-block;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(249, 115, 22, 0.9);
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    z-index: 10;
+    pointer-events: none;
+    animation: pulse-hint 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.7; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(-4px); }
+}
+
+/* Webkit scrollbar styling (Chrome, Safari, Edge) */
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+  background: #f1f5f9;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #94a3b8;        /* slate-400 */
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;  /* slate-200 */
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #64748b;        /* slate-500 */
+}
+
+/* Variant: vertical scroll juga (untuk tabel panjang) */
+.table-wrapper-y {
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+  max-height: 70vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Variant: dengan border untuk highlight area scroll */
+.table-wrapper-bordered {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #cbd5e1;    /* slate-300 */
+  border-radius: 6px;
+  background: #fafafa;
+  position: relative;
+}
+
+/* Shadow indicator pada edge saat ada scroll content */
+.table-wrapper-bordered::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 8px; /* avoid covering scrollbar */
+  width: 30px;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.08));
+  pointer-events: none;
+  border-radius: 0 6px 6px 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.table-wrapper-bordered:hover::after {
+  opacity: 1;
+}
+
+/* Print-safe: hapus scroll & border saat cetak */
+@media print {
+  .table-wrapper,
+  .table-wrapper-y,
+  .table-wrapper-bordered {
+    overflow: visible !important;
+    white-space: normal !important;
+    max-height: none !important;
+    border: none !important;
+    background: white !important;
+  }
+  
+  .table-wrapper::after,
+  .table-wrapper-bordered::after {
+    display: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   📱 DEVICE INDICATOR (DEBUG ONLY — hidden by default)
+   Tambah class .show-device-debug ke body untuk preview
+   ════════════════════════════════════════════════════════════════ */
+.device-debug {
+  display: none;
+}
+
+body.show-device-debug .device-debug {
+  display: block;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 11px;
+  pointer-events: none;
+}
+
+body.show-device-debug .device-debug::before {
+  content: '📱 Mobile XS';
+}
+
+@media (min-width: 480px) {
+  body.show-device-debug .device-debug::before { content: '📱 Mobile'; }
+}
+@media (min-width: 768px) {
+  body.show-device-debug .device-debug::before { content: '📲 Tablet Portrait'; }
+}
+@media (min-width: 992px) {
+  body.show-device-debug .device-debug::before { content: '📲 Tablet Landscape'; }
+}
+@media (min-width: 1200px) {
+  body.show-device-debug .device-debug::before { content: '💻 Laptop'; }
+}
+@media (min-width: 1440px) {
+  body.show-device-debug .device-debug::before { content: '🖥️ Desktop'; }
+}
+@media (min-width: 1920px) {
+  body.show-device-debug .device-debug::before { content: '🖥️ Full HD'; }
+}
+@media (min-width: 2560px) {
+  body.show-device-debug .device-debug::before { content: '🖥️ 2K Monitor'; }
+}
+@media (min-width: 3840px) {
+  body.show-device-debug .device-debug::before { content: '🖥️ 4K Monitor'; }
+}
+
+/* Prevent text overflow on long content */
+.break-words {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   🛡️ GLOBAL ANTI-OVERFLOW PROTECTION
+   Mencegah konten keluar dari viewport di breakpoint apapun
+   ════════════════════════════════════════════════════════════════ */
+* {
+  /* Prevent margin/padding overflow */
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Force wrap untuk long text */
+p, span, div, td, th, button, a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Khusus untuk text yang harus tetap satu line (badges, mono) */
+.no-wrap, .whitespace-nowrap {
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+/* Image responsive default */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Form elements responsive */
+input, select, textarea {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   📱 4-MODE RESPONSIVE LAYOUT STRATEGY
+   
+   Mode 1: DESKTOP (≥1440px)  → Full Table — All columns visible
+   Mode 2: LAPLOP (1200-1439)  → Horizontal Scroll — Table scrollable
+   Mode 3: TABLET (768-1199)   → Summary + Expand Detail
+   Mode 4: MOBILE (<768px)     → Card Layout — Stack vertical
+   ════════════════════════════════════════════════════════════════ */
+
+/* Hide on specific breakpoints */
+.hide-mobile  { display: block; }
+.hide-tablet  { display: block; }
+.hide-laptop  { display: block; }
+.hide-desktop { display: block; }
+
+@media (max-width: 767px)  { .hide-mobile  { display: none !important; } }
+@media (min-width: 768px) and (max-width: 1199px) { .hide-tablet { display: none !important; } }
+@media (min-width: 1200px) and (max-width: 1439px) { .hide-laptop { display: none !important; } }
+@media (min-width: 1440px) { .hide-desktop { display: none !important; } }
+
+/* Show only on specific breakpoints */
+.show-mobile-only  { display: none; }
+.show-tablet-only  { display: none; }
+.show-laptop-only  { display: none; }
+.show-desktop-only { display: none; }
+
+@media (max-width: 767px) { .show-mobile-only { display: block !important; } }
+@media (min-width: 768px) and (max-width: 1199px) { .show-tablet-only { display: block !important; } }
+@media (min-width: 1200px) and (max-width: 1439px) { .show-laptop-only { display: block !important; } }
+@media (min-width: 1440px) { .show-desktop-only { display: block !important; } }
+
+/* ════════════════════════════════════════════════════════════════
+   🔄 4-MODE TABLE BEHAVIOR
+   ════════════════════════════════════════════════════════════════ */
+
+/* Default: full table */
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Mobile (< 768) — hide table, show cards */
+@media (max-width: 767px) {
+  .responsive-table-wrapper.use-card-mobile {
+    display: none;
+  }
+  .responsive-card-list.use-card-mobile {
+    display: block;
+  }
+}
+
+/* Tablet (768-1199) — summary + expand */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .responsive-table-wrapper.use-summary-tablet table {
+    /* Sembunyikan kolom detail di tablet — gunakan class .col-detail-only */
+  }
+  .col-detail-only {
+    display: none !important;
+  }
+}
+
+/* Laptop (1200-1439) — horizontal scroll */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .responsive-table-wrapper {
+    overflow-x: auto !important;
+  }
+  .responsive-table-wrapper table {
+    min-width: 100%;
+  }
+}
+
+/* Desktop (≥1440) — full table no scroll */
+@media (min-width: 1440px) {
+  .responsive-table-wrapper {
+    overflow-x: visible;
+  }
+}
+
+/* Card view default hidden */
+.responsive-card-list {
+  display: none;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   🎯 SIDEBAR RESPONSIVE BEHAVIOR
+   ════════════════════════════════════════════════════════════════ */
+
+/* Mobile (< 992) — sidebar hidden by default, slide-out drawer */
+@media (max-width: 991px) {
+  .dashboard-sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    z-index: 50;
+  }
+  .dashboard-sidebar.is-open {
+    transform: translateX(0);
+  }
+  .dashboard-main {
+    margin-left: 0 !important;
+  }
+}
+
+/* Tablet Landscape (992-1199) — sidebar always visible but narrow */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .dashboard-sidebar {
+    width: 60px;
+  }
+  .dashboard-sidebar .sidebar-label {
+    display: none;
+  }
+}
+
+/* Laptop+ (≥1200) — full sidebar */
+@media (min-width: 1200px) {
+  .dashboard-sidebar {
+    width: 240px;
+  }
+}
+
+/* Desktop+ (≥1440) — full sidebar lebih lebar */
+@media (min-width: 1440px) {
+  .dashboard-sidebar {
+    width: 260px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   🎯 KPI CARDS RESPONSIVE GRID (Anti-Overflow)
+   ════════════════════════════════════════════════════════════════ */
+.kpi-grid {
+  display: grid;
+  gap: 0.5rem;
+  /* 1 column default */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 375px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } }
+@media (min-width: 768px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; } }
+@media (min-width: 992px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1440px) { .kpi-grid { grid-template-columns: repeat(7, 1fr); gap: 0.75rem; } }
+@media (min-width: 1920px) { .kpi-grid { gap: 1rem; } }
+
+/* ════════════════════════════════════════════════════════════════
+   🎯 BUTTON RESPONSIVE — Anti Hilang
+   Pastikan semua tombol tetap accessible di semua device
+   ════════════════════════════════════════════════════════════════ */
+.btn-responsive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+  min-height: 36px; /* Tap target minimum (Apple HIG) */
+  min-width: 36px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .btn-responsive {
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Button text auto-hide pada mobile, show icon only */
+@media (max-width: 479px) {
+  .btn-text-mobile-hide {
+    display: none;
+  }
+}
+
+/* Action toolbar overflow scroll horizontal jika perlu */
+.action-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .action-toolbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .action-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+  .action-toolbar > * {
+    flex-shrink: 0;
+  }
+}
+
+/* ════════════════════════════════════════
+   REMINDER BLINK ANIMATIONS
+   ════════════════════════════════════════ */
+
+/* Red urgent blink (Pelunasan Hotel - kritis) */
+@keyframes urgent-blink-red {
+  0%, 100% {
+    background-color: rgb(220 38 38);
+    color: white;
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  }
+  50% {
+    background-color: rgb(252 165 165);
+    color: rgb(127 29 29);
+    box-shadow: 0 0 0 6px rgba(220, 38, 38, 0);
+  }
+}
+
+.blink-red-urgent {
+  animation: urgent-blink-red 1s ease-in-out infinite;
+  font-weight: 900;
+}
+
+/* Orange visa blink (Hotel Approval VISA - warning) */
+@keyframes urgent-blink-orange {
+  0%, 100% {
+    background-color: rgb(234 88 12);
+    color: white;
+    box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7);
+  }
+  50% {
+    background-color: rgb(254 215 170);
+    color: rgb(154 52 18);
+    box-shadow: 0 0 0 6px rgba(234, 88, 12, 0);
+  }
+}
+
+.blink-orange-urgent {
+  animation: urgent-blink-orange 1.2s ease-in-out infinite;
+  font-weight: 900;
+}
+
+/* Subtle pulsing border for table rows that need attention */
+@keyframes row-attention-pulse {
+  0%, 100% {
+    background-color: rgb(254 242 242);
+    border-left-color: rgb(220 38 38);
+  }
+  50% {
+    background-color: rgb(254 226 226);
+    border-left-color: rgb(185 28 28);
+  }
+}
+
+.row-attention {
+  animation: row-attention-pulse 2s ease-in-out infinite;
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+
+/* Disable blink for print/PDF (agar tidak distracting) */
+@media print {
+  .blink-red-urgent,
+  .blink-orange-urgent,
+  .row-attention {
+    animation: none !important;
+    background-color: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Custom number input — hide arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Table scrollbar (horizontal) */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Print styles */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  .no-print, button {
+    display: none !important;
+  }
+
+  /* Force table to fit page */
+  .print-scale {
+    transform: scale(0.55);
+    transform-origin: top left;
+    width: 182%;
+  }
+
+  * {
+    box-shadow: none !important;
+  }
+  
+  /* Background colors for print */
+  .bg-buy { background-color: #fce7e5 !important; }
+  .bg-sell { background-color: #e6f4ea !important; }
+  .bg-header { 
+    background-color: #1e3a5f !important; 
+    color: white !important;
+  }
+  .bg-header * { color: white !important; }
+  
+  /* Print-only header */
+  .print-only { display: block !important; }
+  
+  /* Page breaks */
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+  .avoid-break { 
+    page-break-inside: avoid; 
+    break-inside: avoid;
+  }
+  
+  /* Watermark style */
+  .watermark-print {
+    position: fixed;
+    bottom: 5mm;
+    left: 8mm;
+    right: 8mm;
+    text-align: center;
+    font-size: 8pt;
+    color: #94a3b8;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2mm;
+  }
+}
+
+/* Print-only content hidden on screen */
+.print-only {
+  display: none;
+}
+
+/* ════════════════════════════════════════
+   CL PRINT — Now uses popup window strategy
+   (see handlePrintBrowser in CLModal.tsx)
+   Print mode below is kept for legacy support
+   ════════════════════════════════════════ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+}
+
+/* ════════════════════════════════════════
+   NEW IMPORT HIGHLIGHT — Flash hijau untuk
+   booking yang baru saja di-import
+   ════════════════════════════════════════ */
+@keyframes flash-new-import {
+  0%, 100% {
+    background-color: rgb(220 252 231);  /* green-100 */
+    box-shadow: inset 4px 0 0 rgb(22 163 74); /* green-600 */
+  }
+  50% {
+    background-color: rgb(187 247 208);  /* green-200 */
+    box-shadow: inset 6px 0 0 rgb(21 128 61); /* green-700 */
+  }
+}
+
+.flash-new-import {
+  animation: flash-new-import 1s ease-in-out 5; /* 5 kedip lalu stop */
+}
+
+/* Bounce effect untuk header saat ada import baru */
+@keyframes bounce-attention {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-6px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-3px); }
+}
+
+.bounce-attention {
+  animation: bounce-attention 0.8s ease-in-out 2;
+}
+
+@media print {
+  .flash-new-import, .bounce-attention {
+    animation: none !important;
+    background-color: white !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}
+
+/* Smooth transitions for inputs */
+input, select {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Focus ring polish */
+input:focus, select:focus {
+  outline: none;
+}
+
+/* Prevent layout shift on date inputs */
+input[type="date"] {
+  min-width: 130px;
+}
