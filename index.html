@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes" />
+    <meta name="description" content="TAMIMA Hotel Booking Profitability Dashboard - Statement Booking Agent & Confirmation Letter System untuk PT. TAMIMA JAYA WISATA" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json" />
+    
+    <!-- Theme & Icons -->
+    <meta name="theme-color" content="#f97316" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="TAMIMA CL" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="TAMIMA Booking Dashboard" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="./pwa-icon-512.png" />
+    <link rel="apple-touch-icon" href="./pwa-icon-512.png" />
+    <link rel="shortcut icon" href="./pwa-icon-512.png" />
+    
+    <!-- Microsoft Windows tile -->
+    <meta name="msapplication-TileColor" content="#f97316" />
+    <meta name="msapplication-TileImage" content="./pwa-icon-512.png" />
+    <meta name="msapplication-config" content="none" />
+    
+    <!-- Open Graph (untuk share link) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TAMIMA Hotel Booking Profitability Dashboard" />
+    <meta property="og:description" content="Statement Booking Agent & Confirmation Letter System untuk PT. TAMIMA JAYA WISATA - Hajj & Umrah Specialist" />
+    <meta property="og:image" content="./pwa-icon-512.png" />
+    
+    <title>TAMIMA Hotel Booking Dashboard | PT. TAMIMA JAYA WISATA</title>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js', { scope: './' })
+            .then((reg) => {
+              console.log('✅ SW registered:', reg.scope);
+              
+              // Check for updates every 60 seconds
+              setInterval(() => reg.update(), 60000);
+              
+              // Notify user when new SW available
+              reg.addEventListener('updatefound', () => {
+                const newWorker = reg.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      console.log('🔄 New version available');
+                      // Optional: show update prompt
+                      if (confirm('Versi terbaru tersedia. Reload aplikasi?')) {
+                        newWorker.postMessage({ type: 'SKIP_WAITING' });
+                        window.location.reload();
+                      }
+                    }
+                  });
+                }
+              });
+            })
+            .catch((err) => console.warn('SW registration failed:', err));
+        });
+      }
+      
+      // PWA Install Prompt — store for later use
+      let deferredInstallPrompt = null;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        window.deferredInstallPrompt = e;
+        console.log('💡 App can be installed!');
+      });
+      
+      window.addEventListener('appinstalled', () => {
+        console.log('✅ TAMIMA App installed!');
+        deferredInstallPrompt = null;
+        window.deferredInstallPrompt = null;
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
