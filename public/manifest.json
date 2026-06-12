@@ -1,0 +1,58 @@
+{
+  "name": "TAMIMA Hotel Booking Profitability Dashboard",
+  "short_name": "TAMIMA CL",
+  "description": "Statement Booking Agent & Confirmation Letter System untuk PT. TAMIMA JAYA WISATA. Multi-payment & multi-currency hotel booking calculator dengan PDF/DOCX export.",
+  "id": "/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f172a",
+  "theme_color": "#f97316",
+  "lang": "id-ID",
+  "dir": "ltr",
+  "categories": ["business", "finance", "productivity", "travel"],
+  "icons": [
+    {
+      "src": "./pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./pwa-icon-512.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "TAMIMA Booking Dashboard"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Booking Baru",
+      "short_name": "Baru",
+      "description": "Buat orderan booking baru",
+      "url": "./?action=new",
+      "icons": [{ "src": "./pwa-icon-512.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Terbitkan CL",
+      "short_name": "CL",
+      "description": "Buka Confirmation Letter generator",
+      "url": "./?action=cl",
+      "icons": [{ "src": "./pwa-icon-512.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
+}
